@@ -83,3 +83,25 @@ body {
 .hidden {
     display: none;
 }
+
+@media (max-width: 768px) {
+    .chat-container {
+        margin-top: 15px;
+    }
+
+    .jumbotron {
+        padding: 2rem 1rem;
+    }
+
+    .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .lead {
+        font-size: 1.1rem;
+    }
+
+    #messageArea {
+        height: 300px;
+    }
+}

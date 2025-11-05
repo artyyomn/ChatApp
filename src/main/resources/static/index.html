@@ -17,71 +17,75 @@
     <a class="navbar-brand" href="#">Realtime Chat</a>
 </nav>
 
-<div class="container">
-    <div id="username-page">
-        <div class="jumbotron text-center">
-            <h1 class="display-4">Welcome to Realtime Chat!</h1>
-            <p class="lead">Create a chat room or join an existing one.</p>
-            <hr class="my-4">
-            <form id="usernameForm" name="usernameForm">
-                <div class="form-group">
-                    <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg">Start Chatting</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div id="room-page" class="hidden">
-        <div class="jumbotron text-center">
-            <h1 class="display-4">Create or Join a Room</h1>
-            <p class="lead">Enter a room code to join a room, or create a new one.</p>
-            <hr class="my-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <form id="joinRoomForm" name="joinRoomForm">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div id="username-page">
+                <div class="jumbotron text-center">
+                    <h1 class="display-4">Welcome to Realtime Chat!</h1>
+                    <p class="lead">Create a chat room or join an existing one.</p>
+                    <hr class="my-4">
+                    <form id="usernameForm" name="usernameForm">
                         <div class="form-group">
-                            <input type="text" id="roomCode" placeholder="Enter Room Code" autocomplete="off" class="form-control" />
+                            <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-secondary btn-lg">Join Room</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                    <form id="createRoomForm" name="createRoomForm">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-lg">Create New Room</button>
+                            <button type="submit" class="btn btn-primary btn-lg">Start Chatting</button>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div id="chat-page" class="hidden">
-        <div class="chat-container">
-            <div class="chat-header">
-                <h2 id="room-code-display"></h2>
-            </div>
-            <div class="connecting">
-                Connecting...
-            </div>
-            <ul id="messageArea" class="list-group">
-
-            </ul>
-            <form id="messageForm" name="messageForm" nameForm="messageForm">
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Send</button>
+            <div id="room-page" class="hidden">
+                <div class="jumbotron text-center">
+                    <h1 class="display-4">Create or Join a Room</h1>
+                    <p class="lead">Enter a room code to join a room, or create a new one.</p>
+                    <hr class="my-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form id="joinRoomForm" name="joinRoomForm">
+                                <div class="form-group">
+                                    <input type="text" id="roomCode" placeholder="Enter Room Code" autocomplete="off" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-secondary btn-lg">Join Room</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form id="createRoomForm" name="createRoomForm">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success btn-lg">Create New Room</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
+
+            <div id="chat-page" class="hidden">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h2 id="room-code-display"></h2>
+                    </div>
+                    <div class="connecting">
+                        Connecting...
+                    </div>
+                    <ul id="messageArea" class="list-group">
+
+                    </ul>
+                    <form id="messageForm" name="messageForm" nameForm="messageForm">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
