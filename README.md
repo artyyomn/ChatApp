@@ -16,12 +16,11 @@ This is a real-time chat application built with Spring Boot and WebSockets. It a
     *   Java 21
     *   Spring Boot 3.2.2
     *   Spring WebSocket
-    *   Maven
+    *   Gradle
 *   **Frontend:**
     *   HTML
     *   CSS (Bootstrap)
     *   JavaScript
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
     *   SockJS
     *   STOMP
 
@@ -29,7 +28,7 @@ This is a real-time chat application built with Spring Boot and WebSockets. It a
 
 1.  **Prerequisites:**
     *   Java 21 or higher
-    *   Maven
+    *   Gradle (or use the included Gradle wrapper)
 
 2.  **Clone the repository:**
     ```bash
@@ -43,12 +42,12 @@ This is a real-time chat application built with Spring Boot and WebSockets. It a
 
 4.  **Build the application:**
     ```bash
-    ./mvnw clean install
+    ./gradlew build
     ```
 
 5.  **Run the application:**
     ```bash
-    ./mvnw spring-boot:run
+    ./gradlew bootRun
     ```
 
 6.  **Access the application:**
