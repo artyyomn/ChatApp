@@ -1,4 +1,3 @@
-
 'use strict';
 
 var usernamePage = document.querySelector('#username-page');
@@ -17,15 +16,10 @@ var stompClient = null;
 var username = null;
 var roomCode = null;
 
-var colors = [
-    '#2196F3', '#32c787', '#00BCD4', '#ff5652',
-    '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
-];
-
 function connect(event) {
     username = document.querySelector('#name').value.trim();
 
-    if(username) {
+    if (username) {
         usernamePage.classList.add('hidden');
         roomPage.classList.remove('hidden');
     }
@@ -37,7 +31,7 @@ function createRoom(event) {
         .then(response => response.json())
         .then(data => {
             roomCode = data.roomCode;
-            roomCodeDisplay.textContent = 'Room Code: ' + roomCode;
+            roomCodeDisplay.textContent = 'Room: ' + roomCode;
             roomPage.classList.add('hidden');
             chatPage.classList.remove('hidden');
             connectToWebSocket();
@@ -54,18 +48,22 @@ function joinRoom(event) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ roomCode: roomCodeInput, username: username })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data) {
-                roomCode = data.roomCode;
-                roomCodeDisplay.textContent = 'Room Code: ' + roomCode;
-                roomPage.classList.add('hidden');
-                chatPage.classList.remove('hidden');
-                connectToWebSocket();
+        .then(response => {
+            if (response.ok) {
+                return response.json();
             } else {
-                alert('Invalid room code');
+                alert('Invalid room code or room is full.');
+                return Promise.reject('Invalid room code');
             }
-        });
+        })
+        .then(data => {
+            roomCode = data.roomCode;
+            roomCodeDisplay.textContent = 'Room: ' + roomCode;
+            roomPage.classList.add('hidden');
+            chatPage.classList.remove('hidden');
+            connectToWebSocket();
+        })
+        .catch(error => console.error('Error joining room:', error));
     }
     event.preventDefault();
 }
@@ -77,31 +75,26 @@ function connectToWebSocket() {
     stompClient.connect({}, onConnected, onError);
 }
 
-
 function onConnected() {
-    // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public/' + roomCode, onMessageReceived);
 
-    // Tell your username to the server
-    stompClient.send("/app/chat.addUser",
+    stompClient.send("/app/chat.addUser/" + roomCode,
         {},
-        JSON.stringify({sender: username, type: 'JOIN'})
-    )
+        JSON.stringify({ sender: username, type: 'JOIN' })
+    );
 
     connectingElement.classList.add('hidden');
 }
-
 
 function onError(error) {
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
 }
 
-
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
 
-    if(messageContent && stompClient) {
+    if (messageContent && stompClient) {
         var chatMessage = {
             sender: username,
             content: messageInput.value,
@@ -114,57 +107,50 @@ function sendMessage(event) {
     event.preventDefault();
 }
 
-
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
 
     var messageElement = document.createElement('li');
-    messageElement.classList.add('list-group-item');
 
-    if(message.type === 'JOIN') {
+    if (message.type === 'JOIN' || message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
-        message.content = message.sender + ' joined!';
-    } else if (message.type === 'LEAVE') {
-        messageElement.classList.add('event-message');
-        message.content = message.sender + ' left!';
+        message.content = message.sender + (message.type === 'JOIN' ? ' joined!' : ' left!');
+        
+        var textElement = document.createElement('p');
+        var messageText = document.createTextNode(message.content);
+        textElement.appendChild(messageText);
+        messageElement.appendChild(textElement);
+
     } else {
         messageElement.classList.add('chat-message');
+        
+        var messageBubble = document.createElement('div');
+        messageBubble.classList.add('message-bubble');
 
-        var avatarElement = document.createElement('i');
-        var avatarText = document.createTextNode(message.sender[0]);
-        avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(message.sender);
+        if (message.sender === username) {
+            messageElement.classList.add('sent');
+        } else {
+            messageElement.classList.add('received');
+            var messageInfo = document.createElement('div');
+            messageInfo.classList.add('message-info');
+            var usernameElement = document.createElement('span');
+            usernameElement.textContent = message.sender;
+            messageInfo.appendChild(usernameElement);
+            messageBubble.appendChild(messageInfo);
+        }
 
-        messageElement.appendChild(avatarElement);
+        var messageContentElement = document.createElement('p');
+        messageContentElement.textContent = message.content;
 
-        var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(message.sender);
-        usernameElement.appendChild(usernameText);
-        messageElement.appendChild(usernameElement);
+        messageBubble.appendChild(messageContentElement);
+        messageElement.appendChild(messageBubble);
     }
-
-    var textElement = document.createElement('p');
-    var messageText = document.createTextNode(message.content);
-    textElement.appendChild(messageText);
-
-    messageElement.appendChild(textElement);
 
     messageArea.appendChild(messageElement);
     messageArea.scrollTop = messageArea.scrollHeight;
 }
 
-
-function getAvatarColor(messageSender) {
-    var hash = 0;
-    for (var i = 0; i < messageSender.length; i++) {
-        hash = 31 * hash + messageSender.charCodeAt(i);
-    }
-
-    var index = Math.abs(hash % colors.length);
-    return colors[index];
-}
-
-usernameForm.addEventListener('submit', connect, true)
-createRoomForm.addEventListener('submit', createRoom, true)
-joinRoomForm.addEventListener('submit', joinRoom, true)
-messageForm.addEventListener('submit', sendMessage, true)
+usernameForm.addEventListener('submit', connect, true);
+createRoomForm.addEventListener('submit', createRoom, true);
+joinRoomForm.addEventListener('submit', joinRoom, true);
+messageForm.addEventListener('submit', sendMessage, true);

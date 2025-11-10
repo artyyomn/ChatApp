@@ -22,10 +22,12 @@ public class ChatController {
         messagingTemplate.convertAndSend("/topic/public/" + roomCode, chatMessage);
     }
 
-    @MessageMapping("/chat.addUser")
-    public void addUser(@Payload ChatMessage chatMessage,
-                               SimpMessageHeaderAccessor headerAccessor) {
-        // Add username in web socket session
+    @MessageMapping("/chat.addUser/{roomCode}")
+    public void addUser(@DestinationVariable String roomCode, @Payload ChatMessage chatMessage,
+                        SimpMessageHeaderAccessor headerAccessor) {
+        // Add username and roomCode in web socket session
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+        headerAccessor.getSessionAttributes().put("roomCode", roomCode);
+        messagingTemplate.convertAndSend("/topic/public/" + roomCode, chatMessage);
     }
 }

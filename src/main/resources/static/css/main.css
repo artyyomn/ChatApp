@@ -1,107 +1,292 @@
+:root {
+    --primary-color: #007bff; /* Keep for header or other accents if needed */
+    --background-color: #f0f2f5; /* Light grey background for chat */
+    --text-color: #333;
+    --white-color: #fff;
+
+    /* iMessage specific colors */
+    --imessage-sent-bubble: #0b93f6; /* Blue for sent messages */
+    --imessage-received-bubble: #e5e5ea; /* Light grey for received messages */
+    --imessage-sent-text: #fff;
+    --imessage-received-text: #000;
+    --imessage-info-text: #8e8e93; /* Grey for timestamps/info */
+}
 
 body {
-    background-color: #f8f9fa;
-}
-
-.jumbotron {
-    background-color: #fff;
-}
-
-.chat-container {
-    margin-top: 30px;
-}
-
-.chat-header {
-    background-color: #343a40;
-    color: #fff;
-    padding: 15px;
-}
-
-.chat-header h2 {
+    background-color: var(--background-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
-}
-
-.connecting {
-    padding: 15px;
-    text-align: center;
-}
-
-#messageArea {
-    height: 400px;
-    overflow-y: auto;
     padding: 0;
-}
-
-.list-group-item {
-    border: none;
-}
-
-.chat-message {
-    margin-bottom: 10px;
-    overflow: hidden;
-}
-
-.chat-message .avatar {
-    background-color: #007bff;
-    border-radius: 50%;
-    color: #fff;
-    float: left;
-    font-size: 18px;
-    font-weight: bold;
-    height: 40px;
-    line-height: 40px;
-    margin-right: 10px;
-    text-align: center;
-    width: 40px;
-}
-
-.chat-message .username {
-    color: #333;
-    display: block;
-    font-weight: bold;
-}
-
-.chat-message .message-content {
-    background-color: #f1f0f0;
-    border-radius: 6px;
-    display: inline-block;
-    padding: 10px;
-}
-
-.event-message {
-    color: #777;
-    font-style: italic;
-    text-align: center;
-    width: 100%;
-}
-
-#messageForm {
-    background-color: #f8f9fa;
-    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: var(--text-color);
 }
 
 .hidden {
     display: none;
 }
 
+/* --- Username and Room Page --- */
+
+#username-page, #room-page {
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.username-page-container, .room-page-container {
+    background-color: var(--white-color);
+    padding: 40px;
+    border-radius: 12px; /* Slightly more rounded */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}
+
+.title {
+    font-size: 28px; /* Larger title */
+    margin-bottom: 25px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px; /* Larger padding */
+    border: 1px solid #d1d1d6; /* Lighter border */
+    border-radius: 8px; /* More rounded inputs */
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.accent-button {
+    background-color: var(--imessage-sent-bubble); /* Use iMessage blue */
+    color: var(--white-color);
+    border: none;
+    padding: 14px 25px; /* Larger padding */
+    border-radius: 8px; /* More rounded buttons */
+    cursor: pointer;
+    font-size: 17px;
+    width: 100%;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.accent-button:hover {
+    background-color: #0077ed; /* Slightly darker blue on hover */
+}
+
+.room-options {
+    margin-top: 30px;
+}
+
+.separator {
+    margin: 25px 0;
+    font-size: 16px;
+    color: #b0b0b0; /* Lighter separator text */
+    position: relative;
+}
+.separator::before, .separator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background-color: #e0e0e0;
+}
+.separator::before {
+    left: 0;
+}
+.separator::after {
+    right: 0;
+}
+
+
+/* --- Chat Page --- */
+
+#chat-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 700px; /* Slightly narrower for mobile feel */
+    margin: 0 auto;
+    background-color: var(--white-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.chat-header {
+    background-color: var(--white-color); /* White header */
+    color: var(--text-color);
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0; /* Subtle separator */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.chat-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.connecting {
+    padding: 15px;
+    text-align: center;
+    color: var(--imessage-info-text);
+    font-size: 14px;
+}
+
+#messageArea {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px 15px; /* Reduced padding for chat area */
+    list-style: none;
+    margin: 0;
+    background-color: var(--background-color); /* Chat background */
+}
+
+.chat-message {
+    margin-bottom: 8px; /* Tighter spacing between messages */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Default to received */
+}
+
+.message-bubble {
+    max-width: 75%; /* Slightly wider bubbles */
+    padding: 10px 14px;
+    border-radius: 18px; /* Standard iMessage bubble radius */
+    word-wrap: break-word;
+    position: relative;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.chat-message.sent {
+    align-items: flex-end;
+}
+
+.chat-message.sent .message-bubble {
+    background-color: var(--imessage-sent-bubble);
+    color: var(--imessage-sent-text);
+    border-bottom-right-radius: 4px; /* Pointy corner for sent */
+}
+
+.chat-message.received .message-bubble {
+    background-color: var(--imessage-received-bubble);
+    color: var(--imessage-received-text);
+    border-bottom-left-radius: 4px; /* Pointy corner for received */
+}
+
+.message-info {
+    font-size: 11px; /* Smaller info text */
+    color: var(--imessage-info-text);
+    margin-top: 2px;
+    margin-bottom: 2px; /* Space between info and bubble */
+    text-align: left;
+}
+
+.chat-message.sent .message-info {
+    text-align: right;
+}
+
+
+.event-message {
+    text-align: center;
+    color: var(--imessage-info-text);
+    font-style: normal; /* Not italic */
+    font-size: 13px;
+    margin: 15px 0;
+}
+
+#messageForm {
+    padding: 10px 15px; /* Reduced padding */
+    border-top: 1px solid #e0e0e0;
+    background-color: var(--white-color);
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+#messageForm .form-control {
+    flex-grow: 1;
+    margin-right: 8px; /* Tighter spacing */
+    border-radius: 20px; /* Pill-shaped input */
+    background-color: #f9f9f9;
+    border-color: #e0e0e0;
+    padding: 10px 15px;
+}
+
+#messageForm .accent-button {
+    width: auto;
+    padding: 10px 20px;
+    border-radius: 20px; /* Pill-shaped button */
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+/* --- Responsive Design --- */
+
 @media (max-width: 768px) {
+    body {
+        height: 100vh; /* Full height on mobile */
+        padding: 0;
+        align-items: stretch;
+        justify-content: stretch;
+    }
+
+    #username-page, #room-page {
+        padding: 10px;
+        max-width: 100%;
+    }
+
+    .username-page-container, .room-page-container {
+        padding: 20px;
+        border-radius: 0;
+        box-shadow: none;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
     .chat-container {
-        margin-top: 15px;
-    }
-
-    .jumbotron {
-        padding: 2rem 1rem;
-    }
-
-    .display-4 {
-        font-size: 2.5rem;
-    }
-
-    .lead {
-        font-size: 1.1rem;
+        height: 100%;
+        max-width: 100%;
+        border-radius: 0;
+        box-shadow: none;
     }
 
     #messageArea {
-        height: 300px;
+        padding: 10px;
+    }
+
+    #messageForm {
+        padding: 8px 10px;
+    }
+
+    #messageForm .form-control {
+        padding: 8px 12px;
+    }
+
+    #messageForm .accent-button {
+        padding: 8px 15px;
     }
 }

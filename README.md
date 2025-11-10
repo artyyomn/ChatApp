@@ -21,6 +21,7 @@ This is a real-time chat application built with Spring Boot and WebSockets. It a
     *   HTML
     *   CSS (Bootstrap)
     *   JavaScript
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
     *   SockJS
     *   STOMP
 
@@ -52,14 +53,6 @@ This is a real-time chat application built with Spring Boot and WebSockets. It a
 
 6.  **Access the application:**
     Open your web browser and go to `http://localhost:8080`.
-
-## Usage
-
-1.  **Enter Username:** Upon opening the application, you will be prompted to enter a username.
-2.  **Create or Join Room:**
-    *   To create a new room, click the "Create New Room" button. A unique room code will be generated.
-    *   To join an existing room, enter the room code in the provided input field and click "Join Room".
-3.  **Chat:** Once in a room, you can type your messages in the input field and press Enter or click "Send" to send them. Messages from other users and system notifications (join/leave) will appear in the chat area.
 
 ## How it Works
 
