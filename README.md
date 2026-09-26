@@ -71,7 +71,7 @@ The backend is a Spring Boot application that uses the Spring WebSocket module t
 
 ### Frontend
 
-The frontend is a single-page application built with HTML, CSS, and JavaScript.
+The frontend is a single-page application built with vanilla HTML, CSS, and JavaScript.
 
 *   **`index.html`:** The main HTML file that contains the structure of the application.
 *   **`main.css`:** Contains the custom styles for the application.
@@ -95,7 +95,7 @@ The frontend is a single-page application built with HTML, CSS, and JavaScript.
 
 ### WebSocket Endpoints
 
-*   **`/ws`:** The WebSocket endpoint for connecting to the server.
-*   **`/app/chat.sendMessage/{roomCode}`:** The endpoint for sending a chat message.
-*   **`/app/chat.addUser`:** The endpoint for adding a user to a chat room.
-*   **`/topic/public/{roomCode}`:** The topic to subscribe to for receiving chat messages in a specific room.
+*   **`/ws`:** WebSocket endpoint for connecting to the server.
+*   **`/app/chat.sendMessage/{roomCode}`:** endpoint for sending a chat message.
+*   **`/app/chat.addUser`:** endpoint for adding a user to a chat room.
+*   **`/topic/public/{roomCode}`:** topic to subscribe to for receiving chat messages in a specific room.
